@@ -1,12 +1,14 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
+from flask_marshmallow import Marshmallow
 
 app= Flask(__name__)
 # set string to connect to database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://scuba_dev:spam123@127.0.0.1:5432/scuba_dive_shop'
 # create new instance; connects everything together and return a db object
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -17,6 +19,11 @@ class User(db.Model):
     contact_number = db.Column(db.Integer)
     dive_level = db.Column(db.String)
     DoB = db.Column(db.Date)
+
+# give marshmallow info in needs to convert user instances to json
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'name', 'email', 'contact_number', 'dive_level', 'DoB')
 
 #create table in psql database
 #Define a custom CLI (terminal) command
@@ -67,8 +74,8 @@ def seed_db():
     db.session.add_all(users)
     db.session.commit()
     print('Tables seeded')
-
-@app.cli.command('all_users')
+#change from cli commant to route and change parameter to route format add return CardSchema().dump(), import marshmallow to serialize return
+@app.route('/users/')
 def all_users():
     #function :select * from users;
     # use db.session.execute(stmt).all() to select specific columns/field. unident code below
@@ -81,8 +88,9 @@ def all_users():
     #stmt = db.select(User).filter_by(dive_level = 'Open water diver')
     stmt = db.select(User).order_by(User.DoB.desc())
     users = db.session.scalars(stmt)
-    for user in users:
-        print(user.DoB)
+    return UserSchema(many=True).dump(users)
+    #for user in users:
+    #    print(user.DoB)
     #print(users)
     #print(users[0].__dict__)
 
@@ -94,6 +102,7 @@ def first_user():
     user = db.session.scalar(stmt)
     print(user.__dict__)
 #.all() print answer in desired result use .one() for answer with no list format or scalar instead of scalars (if one result use scalar, if multiple results use scalars cos always in list format)
+#count user(object)
 @app.cli.command('count_users')
 def count_users():
     stmt = db.select(db.func.count()).select_from(User)
