@@ -2,28 +2,34 @@ from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
 from flask_marshmallow import Marshmallow
+from flask_bcrypt import Bcrypt
 
 app= Flask(__name__)
+app.config ['JSON_SORT_KEYS'] = False
 # set string to connect to database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://scuba_dev:spam123@127.0.0.1:5432/scuba_dive_shop'
 # create new instance; connects everything together and return a db object
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+bcrypt = Bcrypt(app)
 
 class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    email = db.Column(db.String(70))
+    email = db.Column(db.String(70), nullable = False, unique= True)
+    password = db.Column(db.String, nullable = False)
     contact_number = db.Column(db.Integer)
     dive_level = db.Column(db.String)
     DoB = db.Column(db.Date)
+    is_admin = db.Column(db.Boolean, default = False)
 
 # give marshmallow info in needs to convert user instances to json
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'email', 'contact_number', 'dive_level', 'DoB')
+        fields = ('id', 'name', 'email', 'contact_number', 'dive_level', 'DoB', 'is_admin')
+        ordered = True
 
 #create table in psql database
 #Define a custom CLI (terminal) command
@@ -44,30 +50,38 @@ def seed_db():
     User(
         name = 'Jina Sonkom',
         email = 'jina@spam.com',
+        password =bcrypt.generate_password_hash('spam123').decode('utf-8'),
         contact_number = '0819877825',
         dive_level = 'Advanced open water diver',
-        DoB = date(1999, 4, 20)
+        DoB = date(1999, 4, 20),
+        is_admin = True
     ),
     User(
         name = 'Jiji Sonkom',
         email = 'jiji@spam.com',
+        password = bcrypt.generate_password_hash('egg123').decode('utf-8'),
         contact_number = '0819877826',
         dive_level = 'Open water diver',
-        DoB = date(1997, 11, 11)
+        DoB = date(1997, 11, 11),
+        is_admin = False
     ),
     User(
         name = 'Jan Wachi',
         email = 'jan@spam.com',
+        password = 'cherry123',
         contact_number = '0819877827',
         dive_level = 'Advanced open water diver',
-        DoB = date(1999, 9, 20)
+        DoB = date(1999, 9, 20),
+        is_admin = False
     ),
     User(
-        name = 'Kaitlyn Sonkom',
+        name = 'Kaitlyn Tiv',
         email = 'Kaitlyn@spam.com',
+        password ='bread123',
         contact_number = '0819877828',
         dive_level = 'Open water diver',
-        DoB = date(1996, 5, 20)
+        DoB = date(1996, 5, 20),
+        is_admin = False
     )
     ]
 # use 'add' when adding singular card; use add_all from multiple
@@ -86,7 +100,8 @@ def all_users():
     #stmt = db.select(User).where(db.or_(User.dive_level == 'Advanced open water diver', User.name == 'Jiji Sonkom'))
     # when using filter_by do not need User.dive_leve; singular '='
     #stmt = db.select(User).filter_by(dive_level = 'Open water diver')
-    stmt = db.select(User).order_by(User.DoB.desc())
+    #stmt = db.select(User).order_by(User.DoB.desc())
+    stmt = db.select(User).filter_by(is_admin = True)
     users = db.session.scalars(stmt)
     return UserSchema(many=True).dump(users)
     #for user in users:
