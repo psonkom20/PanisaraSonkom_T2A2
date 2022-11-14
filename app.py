@@ -1,8 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
 from flask_marshmallow import Marshmallow
 from flask_bcrypt import Bcrypt
+from sqlalchemy.exc import IntegrityError
 
 app= Flask(__name__)
 app.config ['JSON_SORT_KEYS'] = False
@@ -28,8 +29,9 @@ class User(db.Model):
 # give marshmallow info in needs to convert user instances to json
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'email', 'contact_number', 'dive_level', 'DoB', 'is_admin')
+        fields = ('id', 'name', 'email', 'contact_number', 'dive_level', 'DoB', 'is_admin', 'password')
         ordered = True
+
 
 #create table in psql database
 #Define a custom CLI (terminal) command
@@ -88,6 +90,26 @@ def seed_db():
     db.session.add_all(users)
     db.session.commit()
     print('Tables seeded')
+
+@app.route('/auth/register/', methods=['POST'])
+def auth_register():
+    try:
+        # Load the posted user info and parse the JSON
+        user_info = UserSchema().load(request.json)
+        # Create a new User model instance from the user_infor
+        user = User(
+            email= user_info['email'],
+            password=bcrypt.generate_password_hash(user_info['password']).decode('utf-8'),
+            name=user_info['name'],
+        )
+        # Add and commit user to DB
+        db.session.add(user)
+        db.session.commit()
+        # Respond to client
+        return UserSchema(exclude=['password']).dump(user), 201
+    except IntegrityError:
+        return {'error': 'Email address already registered'}, 409
+
 #change from cli commant to route and change parameter to route format add return CardSchema().dump(), import marshmallow to serialize return
 @app.route('/users/')
 def all_users():
