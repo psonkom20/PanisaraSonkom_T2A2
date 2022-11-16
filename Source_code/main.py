@@ -2,6 +2,7 @@ from flask import Flask
 from init import db, ma, bcrypt, jwt
 from controllers.dive_trips_controller import dive_trips_bp
 from controllers.auth_controller import auth_bp
+from controllers.cli_controller import db_commands
 import os
 
 
@@ -12,6 +13,10 @@ def create_app():
     def not_found(err):
         return {'error': str(err)}, 404
 
+    @app.errorhandler(401)
+    def unauthorized(err):
+        return {'error': str(err)}, 401
+
     app.config ['JSON_SORT_KEYS']= False
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
@@ -21,7 +26,7 @@ def create_app():
     bcrypt.init_app(app)
     jwt.init_app(app)
 
-
+    app.register_blueprint(db_commands)
     app.register_blueprint(dive_trips_bp)
     app.register_blueprint(auth_bp)
 

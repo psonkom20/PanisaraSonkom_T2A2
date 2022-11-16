@@ -1,12 +1,14 @@
 from flask import Blueprint, request
 from init import db
 from models.dive_trip import DiveTrip, DiveTripSchema
+from controllers.auth_controller import authorize
+from flask_jwt_extended import jwt_required
+
 
 dive_trips_bp = Blueprint('dive_trips', __name__, url_prefix='/dive_trips')
 
 @dive_trips_bp.route('/')
 # decode the token to see token is verify and that it is not expired
-#@jwt_required()
 def get_all_trips():
 # Get all dive trips
     #if not authorize():
@@ -26,8 +28,11 @@ def get_one_trip(id):
         return {'error': f'Trip not found with id {id}'}, 404
 
 @dive_trips_bp.route('/<int:id>/', methods= ['DELETE'])
+@jwt_required()
 def delete_one_trip(id):
 # Get one dive trip by id number
+    authorize()
+
     stmt = db.select(DiveTrip).filter_by(id=id)
     dive_trip = db.session.scalar(stmt)
     if dive_trip:
@@ -38,6 +43,7 @@ def delete_one_trip(id):
         return {'error': f'Trip not found with id {id}'}, 404
 
 @dive_trips_bp.route('/<int:id>/', methods=['PUT', 'PATCH'])
+@jwt_required()
 def update_one_trip(id):
 # Update a trip's information
     stmt = db.select(DiveTrip).filter_by(id=id)
@@ -56,7 +62,8 @@ def update_one_trip(id):
 
 
 @dive_trips_bp.route('/', methods=['POST'])
-def create_card():
+@jwt_required()
+def create_trip():
     # Create a new DiveTrip model instance
     dive_trip = DiveTrip(
         name= request.json['name'],
