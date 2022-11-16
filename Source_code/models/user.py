@@ -1,4 +1,4 @@
-from main import db, ma
+from init import db, ma
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -9,6 +9,9 @@ class User(db.Model):
     password = db.Column(db.String, nullable = False)
     dive_level = db.Column(db.String)
     is_admin = db.Column(db.Boolean, default = False)
+
+    clients = db.relationship('Client', back_populates='users', cascade= 'all, delete', uselist= False)
+    instructors = db.relationship('Instructor', back_populates='users', cascade= 'all, delete', uselist= False)
 
 class UserSchema(ma.Schema):
     class Meta:
