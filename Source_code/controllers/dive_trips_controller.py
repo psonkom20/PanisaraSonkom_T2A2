@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from db import db
+from init import db
 from models.dive_trip import DiveTrip, DiveTripSchema
 
 dive_trips_bp = Blueprint('dive_trips', __name__, url_prefix='/dive_trips')
@@ -33,7 +33,7 @@ def delete_one_trip(id):
     if dive_trip:
         db.session.delete(dive_trip)
         db.session.commit()
-        return {'message': f'Trip "{dive_trip.name}" deleted successfully'}
+        return {'message': f"Trip '{dive_trip.name}' deleted successfully"}
     else:
         return {'error': f'Trip not found with id {id}'}, 404
 
