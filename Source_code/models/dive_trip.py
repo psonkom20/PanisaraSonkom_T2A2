@@ -4,9 +4,10 @@ class DiveTrip(db.Model):
     __tablename__ = 'dive_trips'
 
     id= db.Column(db.Integer, primary_key=True)
+    name= db.Column(db.String, nullable = False)
     dive_lvl_required=db.Column(db.String, nullable = False)
     location= db.Column(db.String, nullable = False)
-    date= db.Column(db.Date, nullable = False)
+    date= db.Column(db.String, nullable = False)
     description= db.Column(db.String, nullable = False)
     max_no_people=db.Column(db.Integer, nullable = False)
 
@@ -15,6 +16,6 @@ class DiveTrip(db.Model):
 
 class DiveTripSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'dive_lvl_required', 'location', 'date', 'description', 'max_no_people')
+        fields = ('id', 'name', 'dive_lvl_required', 'location', 'date', 'description', 'max_no_people')
         ordered = True
 
