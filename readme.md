@@ -19,7 +19,7 @@ Methods: GET\
 Arguments: None\
 Description: Return all users\
 Response Body:
-![image of user route](Resources/:user:.png)
+![image of user route](Resources/user_all.png)
 
 #### users/id
 Methods: GET\
@@ -125,13 +125,49 @@ Methods: GET\
 Arguments: None\
 Description: Get one booking by id number\
 Response Body:
-![image of user route](Resources/booking_id.png)
+![image of booking route](Resources/booking_id.png)
 
 #### /bookings
 Methods: DELETE\
 Arguments: None\
 Description: Delete a booking by ID\
 Response Body:
-![image of user route](Resources/booking_delete.png)
+![image of booking route](Resources/booking_delete.png)
 
+## R6
+![image of ERD](Resources/ERD.png)
+
+## R7
+-Flask
+-Flask_Bcrypt
+-flask_jwt_extended
+-flask_marshmallow
+-Flask-SQLAlchemy
+-pip-review
+-psycopg2
+-python-dotenv
+SQLAlchemy
+
+## R8
+### User Cardinality
+![image of user cardinality](Resources/user_cardinality.png)
+
+### Booking Cardinality
+![image of booking cardinality](Resources/Booking_cardinality.png)
+
+### Dive Trip Cardinality
+![image of dive trip cardinality](Resources/dt_cardinality.png)
+
+## R9
+### User Model
+![image of user model](Resources/user_model.png)
+
+### Booking Model
+![image of booking model](Resources/booking_model.png)
+
+### Dive Trip Model
+![image of dive trip model](Resources/dt_model.png)
+
+## R10
+https://trello.com/b/0rNLEBOU/kanban-template
 
