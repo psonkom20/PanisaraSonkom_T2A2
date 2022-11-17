@@ -58,7 +58,7 @@ def update_one_user(id):
     user = db.session.scalar(stmt)
     if user:
 
-        user.dive_lvl= request.json.get('dive_lvl') or user.dive_lvl
+        user.dive_level= request.json.get('dive_level') or user.dive_level
 
         db.session.commit()
         return UserSchema().dump(user)
