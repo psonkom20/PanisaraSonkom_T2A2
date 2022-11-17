@@ -19,21 +19,21 @@ Methods: GET
 Arguments: None
 Description: Return all users
 Response Body:
-![image of user route](resources/%3Ausers%3A.png)
+![image of user route](resources/user.png)
 
 ### user/id
 Methods: GET
 Arguments: None
 Description: Get one user by id number
 Response Body:
-![image of user route](resources/user%3A1.png)
+![image of user route](resources/user:1.png)
 
 ### user/dive_level
 Methods: GET
 Arguments: None
 Description: Get one user by dive_level
 Response Body:
-![image of user route](resources/user%3Adive_level.png)
+![image of user route](resources/user:dive_level.png)
 
 ### user/id
 Methods: DELETE
