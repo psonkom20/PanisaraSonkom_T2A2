@@ -71,7 +71,7 @@ Methods: GET\
 Arguments: None\
 Description: Get dive trip by dive_level\
 Response Body:
-![image of dive_trips route](resources/dt_by_dive_lvl.png)
+![image of dive_trips route](Resources/dt_by_dive_lvl.png)
 
 #### dive_trips/id
 Methods: DELETE\
@@ -79,7 +79,7 @@ Arguments: dive_trips_id\
 Description: Delete one dive trip by id number\
 Authentication: @jwt_required(), Bearer token\
 Response Body:
-![image of dive_trips route](resources/dt_delete.png)
+![image of dive_trips route](Resources/dt_delete.png)
 
 #### dive_trips/id
 Methods: PUT , PATCH\
@@ -87,7 +87,7 @@ Arguments: dive_lvl_required\
 Description: Delete one user by id number\
 Authentication: @jwt_required(), Bearer token\
 Response Body:
-![image of dive_trips route](resources/dt_patch.png)
+![image of dive_trips route](Resources/dt_patch.png)
 
 #### /dive_trips
 Methods: POST\
@@ -95,7 +95,7 @@ Arguments: all dive_trip attributes\
 Description: create dive_trip instance\
 Authentication: @jwt_required(), Bearer token\
 Response Body:
-![image of dive_trips route](resources/dt_create.png)
+![image of dive_trips route](Resources/dt_create.png)
 
 ### auth routes:
 #### auth/register
