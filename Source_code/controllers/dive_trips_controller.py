@@ -25,15 +25,15 @@ def get_trip_lvl(dive_lvl_required):
     else:
         return {'error': f'Trip not found with dive level {dive_lvl_required}'}, 404
 
-@dive_trips_bp.route('/<string:name>/')
-def get_trip_name(name):
-# Get one dive trip by name
-    stmt = db.select(DiveTrip).filter_by(name=name)
+@dive_trips_bp.route('/<int:id>/')
+def get_trip_id(id):
+# Get one dive trip by id
+    stmt = db.select(DiveTrip).filter_by(id=id)
     dive_trip = db.session.scalar(stmt)
     if dive_trip:
         return DiveTripSchema().dump(dive_trip)
     else:
-        return {'error': f'Trip not found with name {name}'}, 404
+        return {'error': f'Trip not found with id {id}'}, 404
 
 
 @dive_trips_bp.route('/<int:id>/', methods= ['DELETE'])
