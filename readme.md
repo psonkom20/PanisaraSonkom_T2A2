@@ -14,28 +14,66 @@ There are many benefits to using an ORM. First, due to its functionalities ORM c
 
 ## R5
 ### User routes:
-#### /user
+#### /users
 Methods: GET
 Arguments: None
 Description: Return all users
 Response Body:
-![image of user route](resources/user.png)
+![image of user route](Resources/user.png)
 
-### user/id
+#### users/id
 Methods: GET
 Arguments: None
 Description: Get one user by id number
 Response Body:
-![image of user route](resources/user:1.png)
+![image of user route](Resources/user:1.png)
 
-### user/dive_level
+#### users/dive_level
+Methods: GET
+Arguments: None
+Description: Get one user by dive_level
+Response Body:
+![image of user route](Resources/user:dive_level.png)
+
+#### users/id
+Methods: DELETE
+Arguments: user_id
+Description: Delete one user by id number
+Authentication: @jwt_required(), Bearer token
+Response Body:
+![image of user route](Resources/user(delete).png)
+
+#### users/id
+Methods: PUT , PATCH
+Arguments: dive_level
+Description: Delete one user by id number
+Authentication: @jwt_required(), Bearer token
+Response Body:
+![image of user route](Resources/user(patch).png)
+
+### dive_trips routes:
+#### /dive_trips
+Methods: GET
+Arguments: None
+Description: Return all dive trips
+Response Body:
+![image of user route](Resources/all_dt.png)
+
+#### user/id
+Methods: GET
+Arguments: None
+Description: Get one dive trip by id number
+Response Body:
+![image of user route](Resources/user:1.png)
+
+#### user/dive_level
 Methods: GET
 Arguments: None
 Description: Get one user by dive_level
 Response Body:
 ![image of user route](resources/user:dive_level.png)
 
-### user/id
+#### user/id
 Methods: DELETE
 Arguments: user_id
 Description: Delete one user by id number
@@ -43,7 +81,7 @@ Authentication: @jwt_required(), Bearer token
 Response Body:
 ![image of user route](resources/user(delete).png)
 
-### user/id
+#### user/id
 Methods: PUT , PATCH
 Arguments: dive_level
 Description: Delete one user by id number
