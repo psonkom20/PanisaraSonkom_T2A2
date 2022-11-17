@@ -8,29 +8,38 @@ from flask_jwt_extended import jwt_required
 dive_trips_bp = Blueprint('dive_trips', __name__, url_prefix='/dive_trips')
 
 @dive_trips_bp.route('/')
-# decode the token to see token is verify and that it is not expired
 def get_all_trips():
 # Get all dive trips
-    #if not authorize():
-    #    return {'error': 'You must be an admin'}, 401
+
     stmt = db.select(DiveTrip)
     dive_trips = db.session.scalars(stmt)
     return DiveTripSchema(many=True).dump(dive_trips)
 
-@dive_trips_bp.route('/<int:id>/')
-def get_one_trip(id):
+@dive_trips_bp.route('/<string:dive_lvl_required>/')
+def get_trip_lvl(dive_lvl_required):
 # Get one dive trip by id number
-    stmt = db.select(DiveTrip).filter_by(id=id)
+    stmt = db.select(DiveTrip).filter_by(dive_lvl_required=dive_lvl_required)
     dive_trip = db.session.scalar(stmt)
     if dive_trip:
         return DiveTripSchema().dump(dive_trip)
     else:
-        return {'error': f'Trip not found with id {id}'}, 404
+        return {'error': f'Trip not found with dive level {dive_lvl_required}'}, 404
+
+@dive_trips_bp.route('/<string:name>/')
+def get_trip_name(name):
+# Get one dive trip by name
+    stmt = db.select(DiveTrip).filter_by(name=name)
+    dive_trip = db.session.scalar(stmt)
+    if dive_trip:
+        return DiveTripSchema().dump(dive_trip)
+    else:
+        return {'error': f'Trip not found with name {name}'}, 404
+
 
 @dive_trips_bp.route('/<int:id>/', methods= ['DELETE'])
 @jwt_required()
 def delete_one_trip(id):
-# Get one dive trip by id number
+# Delete a dive trip by id number
     authorize()
 
     stmt = db.select(DiveTrip).filter_by(id=id)
@@ -64,18 +73,23 @@ def update_one_trip(id):
 @dive_trips_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_trip():
-    # Create a new DiveTrip model instance
-    dive_trip = DiveTrip(
-        name= request.json['name'],
-        dive_lvl_required= request.json['dive_lvl_required'],
-        location=request.json['location'],
-        date= request.json['date'],
-        description=request.json['description'],
-        max_no_people= request.json['max_no_people']
+
+    # Query to find trip by title
+    stmt = db.select(DiveTrip).filter_by(title=date['title'])
+    dive_trip = db.session.scalar(stmt)
+    # Create a new DiveTrip model instance if it doesn't exist
+    if not dive_trip:
+        dive_trip = DiveTrip(
+            name= request.json['name'],
+            dive_lvl_required= request.json['dive_lvl_required'],
+            location=request.json['location'],
+            date= request.json['date'],
+            description=request.json['description'],
+            max_no_people= request.json['max_no_people']
     )
-    # Add and commit dive trips to DB
+
     db.session.add(dive_trip)
     db.session.commit()
-    # Respond to client
+
     return DiveTripSchema().dump(dive_trip), 201
 

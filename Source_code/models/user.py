@@ -1,4 +1,7 @@
 from init import db, ma
+from marshmallow.validate import OneOf, And, Regexp
+
+VALID_DIVE_LEVEL = ('Open-water','Advanced', 'Rescue', 'Dive-Master')
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -10,10 +13,13 @@ class User(db.Model):
     dive_level = db.Column(db.String)
     is_admin = db.Column(db.Boolean, default = False)
 
-    clients = db.relationship('Client', back_populates='users', cascade= 'all, delete', uselist= False)
-    instructors = db.relationship('Instructor', back_populates='users', cascade= 'all, delete', uselist= False)
+    bookings =db.relationship('Booking', back_populates= 'users', cascade= 'all, delete')
 
 class UserSchema(ma.Schema):
+
+    dive_level = fields.String(required=True, validate=And(
+        OneOf(VALID_DIVE_LEVEL), Regexp('[a-zA-Z0-9]+$', error= 'Only letters, numbers and spaces are allowed')))
+
     class Meta:
         fields = ('id', 'name', 'email', 'dive_level', 'is_admin', 'password')
         ordered = True
