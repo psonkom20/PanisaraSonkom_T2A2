@@ -59,12 +59,11 @@ def update_one_booking(id):
 
 @bookings_bp.route('/', methods=['POST'])
 def create_booking():
-    data = BookingSchema().load(request.json, partial = True)
     # Create a new booking model instance
     booking = Booking(
 
-        dive_trip_id= data['dive_trip_id'],
-        user_id = data['user_id'],
+        dive_trip_id= request.json['dive_trip_id'],
+        user_id = request.json['user_id'],
 
 
     )

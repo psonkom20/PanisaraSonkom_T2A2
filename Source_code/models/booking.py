@@ -21,7 +21,5 @@ class BookingSchema(ma.Schema):
 
     class Meta:
         fields = ('id', 'date', 'time', 'users','dive_trips', '_dive_trip_id','user_id')
-        dump_only = ('id', 'date', 'time', 'users','dive_trips')
-        load_only = ('id', 'date', 'time', 'user_id', 'dive_trip_id')
         ordered = True
 
