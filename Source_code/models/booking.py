@@ -10,7 +10,7 @@ class Booking(db.Model):
     dive_trip_id = db.Column(db.Integer, db.ForeignKey('dive_trips.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    dive_trips = db.relationship('DiveTrip', back_populates='bookings', cascade= 'all, delete')
+    dive_trips = db.relationship('DiveTrip', back_populates='bookings')
     users = db.relationship('User', back_populates='bookings')
 
 

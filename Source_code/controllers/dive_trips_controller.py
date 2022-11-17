@@ -74,18 +74,14 @@ def update_one_trip(id):
 @jwt_required()
 def create_trip():
 
-    # Query to find trip by title
-    stmt = db.select(DiveTrip).filter_by(title=date['title'])
-    dive_trip = db.session.scalar(stmt)
-    # Create a new DiveTrip model instance if it doesn't exist
-    if not dive_trip:
-        dive_trip = DiveTrip(
-            name= request.json['name'],
-            dive_lvl_required= request.json['dive_lvl_required'],
-            location=request.json['location'],
-            date= request.json['date'],
-            description=request.json['description'],
-            max_no_people= request.json['max_no_people']
+    # Create a new DiveTrip
+    dive_trip = DiveTrip(
+        name= request.json['name'],
+        dive_lvl_required= request.json['dive_lvl_required'],
+        location=request.json['location'],
+        date= request.json['date'],
+        description=request.json['description'],
+        max_no_people= request.json['max_no_people']
     )
 
     db.session.add(dive_trip)

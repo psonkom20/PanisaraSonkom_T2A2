@@ -15,7 +15,7 @@ class DiveTrip(db.Model):
     description= db.Column(db.String, nullable = False)
     max_no_people=db.Column(db.Integer, nullable = False)
 
-    bookings = db.relationship('Booking', back_populates= 'dive_trips')
+    bookings = db.relationship('Booking', back_populates= 'dive_trips', cascade= 'all, delete')
 
 class DiveTripSchema(ma.Schema):
     dive_lvl_required = fields.String(required=True, validate=And(
