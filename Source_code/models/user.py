@@ -18,7 +18,7 @@ class User(db.Model):
 class UserSchema(ma.Schema):
 
     dive_level = fields.String(required=True, validate=And(
-        OneOf(VALID_DIVE_LEVEL), Regexp('[a-zA-Z0-9]+$', error= 'Only letters, numbers and spaces are allowed')))
+        OneOf(VALID_DIVE_LEVEL), Regexp('[a-zA-Z0-9]+$', error= 'Only letters, numbers and spaces are allowed for this field')))
 
     class Meta:
         fields = ('id', 'name', 'email', 'dive_level', 'is_admin', 'password')

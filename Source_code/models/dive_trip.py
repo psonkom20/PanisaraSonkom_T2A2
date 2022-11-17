@@ -19,7 +19,7 @@ class DiveTrip(db.Model):
 
 class DiveTripSchema(ma.Schema):
     dive_lvl_required = fields.String(required=True, validate=And(
-        OneOf(VALID_DIVE_LVL_REQUIRED), Regexp('[a-zA-Z0-9]+$', error= 'Only letters, numbers and spaces are allowed')))
+        OneOf(VALID_DIVE_LVL_REQUIRED), Regexp('[a-zA-Z0-9]+$', error= 'Only letters, numbers and spaces are allowed for this field')))
 
     class Meta:
         fields = ('id', 'name', 'dive_lvl_required', 'location', 'date', 'description', 'max_no_people')
