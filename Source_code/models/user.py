@@ -1,4 +1,5 @@
 from init import db, ma
+from marshmallow import fields
 from marshmallow.validate import OneOf, And, Regexp
 
 VALID_DIVE_LEVEL = ('Open-water','Advanced', 'Rescue', 'Dive-Master')

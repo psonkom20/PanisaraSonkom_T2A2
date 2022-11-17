@@ -41,12 +41,12 @@ def create_app():
     bcrypt.init_app(app)
     jwt.init_app(app)
 
+
     app.register_blueprint(db_commands)
     app.register_blueprint(dive_trips_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(users_bp)
     app.register_blueprint(bookings_bp)
-
 
     return app
 
