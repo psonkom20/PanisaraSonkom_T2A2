@@ -71,7 +71,7 @@ Methods: GET\
 Arguments: None\
 Description: Get dive trip by dive_level\
 Response Body:
-![image of dive_trips route](resources/dt_by_dive_lvl.pngg)
+![image of dive_trips route](resources/dt_by_dive_lvl.png)
 
 #### dive_trips/id
 Methods: DELETE\
