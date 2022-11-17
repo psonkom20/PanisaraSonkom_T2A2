@@ -15,76 +15,123 @@ There are many benefits to using an ORM. First, due to its functionalities ORM c
 ## R5
 ### User routes:
 #### /users
-Methods: GET
-Arguments: None
-Description: Return all users
+Methods: GET\
+Arguments: None\
+Description: Return all users\
 Response Body:
-![image of user route](Resources/user.png)
+![image of user route](Resources/:user:.png)
 
 #### users/id
-Methods: GET
-Arguments: None
-Description: Get one user by id number
+Methods: GET\
+Arguments: None\
+Description: Get one user by id number\
 Response Body:
 ![image of user route](Resources/user:1.png)
 
 #### users/dive_level
-Methods: GET
-Arguments: None
-Description: Get one user by dive_level
+Methods: GET\
+Arguments: None\
+Description: Get one user by dive_level\
 Response Body:
 ![image of user route](Resources/user:dive_level.png)
 
 #### users/id
-Methods: DELETE
-Arguments: user_id
-Description: Delete one user by id number
-Authentication: @jwt_required(), Bearer token
+Methods: DELETE\
+Arguments: user_id\
+Description: Delete one user by id number\
+Authentication: @jwt_required(), Bearer token\
 Response Body:
 ![image of user route](Resources/user(delete).png)
 
 #### users/id
-Methods: PUT , PATCH
-Arguments: dive_level
-Description: Delete one user by id number
-Authentication: @jwt_required(), Bearer token
+Methods: PUT , PATCH\
+Arguments: dive_level\
+Description: Delete one user by id number\
+Authentication: @jwt_required(), Bearer token\
 Response Body:
 ![image of user route](Resources/user(patch).png)
 
 ### dive_trips routes:
 #### /dive_trips
-Methods: GET
-Arguments: None
-Description: Return all dive trips
+Methods: GET\
+Arguments: None\
+Description: Return all dive trips\
 Response Body:
-![image of user route](Resources/all_dt.png)
+![image of dive_trips route](Resources/all_dt.png)
 
-#### user/id
-Methods: GET
-Arguments: None
-Description: Get one dive trip by id number
+#### dive_trips/id
+Methods: GET\
+Arguments: None\
+Description: Get one dive trip by id number\
 Response Body:
-![image of user route](Resources/user:1.png)
+![image of dive_trips route](Resources/dt_by_id.png)
 
-#### user/dive_level
-Methods: GET
-Arguments: None
-Description: Get one user by dive_level
+#### dive_trips/dive_level
+Methods: GET\
+Arguments: None\
+Description: Get dive trip by dive_level\
 Response Body:
-![image of user route](resources/user:dive_level.png)
+![image of dive_trips route](resources/dt_by_dive_lvl.pngg)
 
-#### user/id
-Methods: DELETE
-Arguments: user_id
-Description: Delete one user by id number
-Authentication: @jwt_required(), Bearer token
+#### dive_trips/id
+Methods: DELETE\
+Arguments: dive_trips_id\
+Description: Delete one dive trip by id number\
+Authentication: @jwt_required(), Bearer token\
 Response Body:
-![image of user route](resources/user(delete).png)
+![image of dive_trips route](resources/dt_delete.png)
 
-#### user/id
-Methods: PUT , PATCH
-Arguments: dive_level
-Description: Delete one user by id number
-Authentication: @jwt_required(), Bearer token
+#### dive_trips/id
+Methods: PUT , PATCH\
+Arguments: dive_lvl_required\
+Description: Delete one user by id number\
+Authentication: @jwt_required(), Bearer token\
 Response Body:
-![image of user route](resources/user(patch).png)
+![image of dive_trips route](resources/dt_patch.png)
+
+#### /dive_trips
+Methods: POST\
+Arguments: all dive_trip attributes\
+Description: create dive_trip instance\
+Authentication: @jwt_required(), Bearer token\
+Response Body:
+![image of dive_trips route](resources/dt_create.png)
+
+### auth routes:
+#### auth/register
+Methods: POST\
+Arguments: name, email, password, dive_level\
+Description: register and create user\
+Response Body:
+![image of register route](Resources/auth_register.png)
+
+#### auth/login
+Methods: POST\
+Arguments: email, password\
+Description: create access token\
+Response Body:
+![image of dive_trips route](Resources/auth_login.png)
+
+### Booking routes:
+#### /bookings
+Methods: GET\
+Arguments: None\
+Description: Return all bookings\
+Response Body:
+![image of booking route](Resources/booking_all.png)
+
+#### bookings/id
+Methods: GET\
+Arguments: None\
+Description: Get one booking by id number\
+Response Body:
+![image of user route](Resources/booking_id.png)
+
+#### /bookings
+Methods: DELETE\
+Arguments: None\
+Description: Delete a booking by ID\
+Response Body:
+![image of user route](Resources/booking_delete.png)
+
+
