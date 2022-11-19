@@ -1,3 +1,20 @@
+## Repo
+https://github.com/psonkom20/PanisaraSonkom_T2A2
+
+## API Installation Instruction
+1. Run terminal application
+2. Git clone github repo
+3. Create virtual environment `python3 -m venv .venv`
+4. Activate virtual environment `.venv/bin/activate`
+5. Install requirements.txt `pip install -r requirements.txt`
+6. Remove 'sample text from .env.sample. should be `.env.`
+7. Run psql
+8. create and set-up new database
+9. Generate JWT key and set up database URL
+10. Create tables `flask db create && flask db seed
+11. Active flask using command: `flask run` or `flask --debug -p 8080`
+
+
 ## R1
 For most scuba shop in Thailand, dive trips are often posted on social media and requires clients to call dive shops to personally book a trip. As there is an increasing amount of interest in scuba diving in Thailand, demands for dive trips are simultaeneously increasing. Therefore the goal of this app is to help dive shops tackle with demand by allowing user to book trip online and search for different dive trips.
 
